@@ -13,12 +13,13 @@ import android.widget.TextView;
 public class CountDownTimerView extends android.support.v7.widget.AppCompatTextView {
 
     private CountDownTimer countDownTimer;
-    private long durationTimeL;
+    private long durationTimeL =25*60000L;
     private final long updateViewIntervalTimeL = 1000L;
 
     public CountDownTimerView(Context context, int durationTimeMinutes) {
         super(context);
         this.durationTimeL = minutesTransformToMillisecond(durationTimeMinutes);
+        initCountDownTimer();
     }
 
     public CountDownTimerView(Context context, @Nullable AttributeSet attrs) {
