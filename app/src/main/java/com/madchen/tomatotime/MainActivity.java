@@ -1,10 +1,9 @@
 package com.madchen.tomatotime;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
-import com.madchen.tomatotime.Base.BaseActivity;
+import com.madchen.tomatotime.base.BaseActivity;
 import com.madchen.tomatotime.view.BottomView;
 import com.madchen.tomatotime.view.CountDownLayoutView;
 import com.madchen.tomatotime.view.TopLayoutView;
