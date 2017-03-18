@@ -1,46 +1,93 @@
 package com.madchen.tomatotime.model;
 
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by chenwei on 15/03/2017.
  */
 
 public class Tomato {
 
+    private int interrupt = 0;
+    private long totalTimeL;
+    private int[] times = new int[2];
+    private int totalMinutes;
     private long startTimeL;
-    private long endTimeL;
-    private int interrupt;
 
-    public Tomato(long startTimeL, long endTimeL, int interrupt) {
-        this.startTimeL = startTimeL;
-        this.endTimeL = endTimeL;
+    public Tomato(int totalMinutes) {
+        this(totalMinutes, 0);
+    }
+
+    public Tomato(int totalMinutes, int interrupt) {
+
+        this.totalMinutes = totalMinutes;
+        this.totalTimeL = totalMinutes * 60 * 1000L;
+        this.times[0] = totalMinutes - 1;
+        this.times[1] = 59;
         this.interrupt = interrupt;
+        this.startTimeL = System.currentTimeMillis();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(startTimeL);
     }
 
-    public Tomato(long startTimeL, long endTimeL) {
-        this(startTimeL, endTimeL, 0);
+    public void addInterruptCount() {
+        this.interrupt += 1;
     }
 
-    private long getStartTimeL() {
-        return startTimeL;
+    public int getMinutes() {
+        return times[0];
     }
 
-    private void setStartTimeL(long startTimeL) {
-        this.startTimeL = startTimeL;
+    public void setMinutes(int minutes) {
+        this.times[0] = minutes;
     }
 
-    private long getEndTimeL() {
-        return endTimeL;
+    public int getSecond() {
+        return times[1];
     }
 
-    private void setEndTimeL(long endTimeL) {
-        this.endTimeL = endTimeL;
+    public void setSecond(int second) {
+        times[1] = second;
     }
 
-    private int getInterrupt() {
+    public int getInterrupt() {
         return interrupt;
     }
 
-    private void setInterrupt(int interrupt) {
+    public void setInterrupt(int interrupt) {
         this.interrupt = interrupt;
+    }
+
+    public long getTotalTimeL() {
+        return totalTimeL;
+    }
+
+    public void setTotalTimeL(long totalTimeL) {
+        this.totalTimeL = totalTimeL;
+    }
+
+    public int[] getTimes() {
+        return times;
+    }
+
+    public void setTimes(int[] times) {
+        this.times = times;
+    }
+
+    public int getTotalMinutes() {
+        return totalMinutes;
+    }
+
+    public void setTotalMinutes(int totalMinutes) {
+        this.totalMinutes = totalMinutes;
+    }
+
+    public long getStartTimeL() {
+        return startTimeL;
+    }
+
+    public void setStartTimeL(long startTimeL) {
+        this.startTimeL = startTimeL;
     }
 }

@@ -3,4 +3,6 @@
 
     <!-- main page -->
     <string name="start_count_down">Start</string>
+    <string name="cancel_tomato_time">Cancel</string>
+    <string name="default_tomato_time">25:00</string>
 </resources>

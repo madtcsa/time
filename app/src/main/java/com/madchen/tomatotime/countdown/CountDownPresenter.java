@@ -7,4 +7,9 @@ import com.madchen.tomatotime.base.BasePresenter;
  */
 
 public interface CountDownPresenter extends BasePresenter {
+
+    void createNewTomato();
+    void cancelTomato();
+    void interruptTomato();
+    void overTomato();
 }
