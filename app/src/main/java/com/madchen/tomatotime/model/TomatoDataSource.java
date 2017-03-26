@@ -10,21 +10,30 @@ public interface TomatoDataSource {
 
     void saveTomato(Tomato tomato);
 
-    void getTomato(GetTomatoCallBack getTomatoCallBack);
+    void loadAllTomato(LoadAllTomatoCallBack loadAllTomatoCallBack);
 
-    void loadTomatoes(LoadTomatoesCallBack loadTomatoesCallBack);
+    void loadMonthTomatoes(long monthTimeL, LoadMonthTomatoesCallBack loadMonthTomatoesCallBack);
 
-    interface GetTomatoCallBack {
+    void loadDayTomatoes(long dayTimeL, LoadDayTomatoesCallBack loadDayTomatoesCallBack);
 
-        void onTomatoLoaded(Tomato tomato);
+    interface LoadAllTomatoCallBack {
 
-        void onDataNotAvailable();
+        void onAllTomatoLoaded(Tomato tomato);
+
+        void onAllDataNotAvailable();
     }
 
-    interface LoadTomatoesCallBack {
+    interface LoadMonthTomatoesCallBack {
 
-        void onTomatoesLoaded(List<Tomato> tomatoList);
+        void onMonthTomatoesLoaded(List<Tomato> tomatoList);
 
-        void onDataNotAvailable();
+        void onMonthDataNotAvailable();
+    }
+
+    interface LoadDayTomatoesCallBack {
+
+        void onDayTomatoesLoaded(List<Tomato> tomatoList);
+
+        void onDayDataNovAvailable();
     }
 }

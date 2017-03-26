@@ -31,7 +31,6 @@ public class CountDownPresenterImpl implements CountDownPresenter {
     @Override
     public void createNewTomato() {
         mTomato = new Tomato(25,0);
-        mTomato.setMinutes(25);
         mCountDownView.startCountDownTime(mTomato);
         initReceiver();
     }

@@ -12,7 +12,7 @@ public interface DBConstants {
 
     String CREATE_TOMATO_TABLE = "CREATE TABLE " + TABLE_NAME + " ( " + TomatoTableField._id + " INTEGER AUTO_INCREMENT, " +
             TomatoTableField.minutes + " LONG NOT NULL, " + TomatoTableField.startTimeL + " LONG NOT NULL, " +
-            " LONG NOT NULL, " + TomatoTableField.interruptCount + " INT NOT NULL"
+            " LONG NOT NULL, " + TomatoTableField.interruptCount + " INTEGER NOT NULL, "
             + "PRIMARY KEY (" + TomatoTableField._id + "));";
 
     interface TomatoTableField {

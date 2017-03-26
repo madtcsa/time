@@ -7,4 +7,11 @@ import com.madchen.tomatotime.base.BasePresenter;
  */
 
 public interface MyDataPresenter extends BasePresenter {
+
+    void getAllTomatoes();
+
+    void getTodayTomatoes(long dateTimeL);
+
+    void getMonthTomatoes(long monthTimeL);
+
 }

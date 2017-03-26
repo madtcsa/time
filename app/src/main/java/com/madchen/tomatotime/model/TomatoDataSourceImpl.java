@@ -23,12 +23,19 @@ public class TomatoDataSourceImpl implements TomatoDataSource {
     }
 
     @Override
-    public void getTomato(GetTomatoCallBack getTomatoCallBack) {
+    public void loadAllTomato(LoadAllTomatoCallBack loadAllTomatoCallBack) {
 
     }
 
     @Override
-    public void loadTomatoes(LoadTomatoesCallBack loadTomatoesCallBack) {
+    public void loadMonthTomatoes(long monthTimeL, LoadMonthTomatoesCallBack loadMonthTomatoesCallBack) {
 
     }
+
+    @Override
+    public void loadDayTomatoes(long dayTimeL, LoadDayTomatoesCallBack loadDayTomatoesCallBack) {
+
+    }
+
+
 }

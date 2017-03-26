@@ -1,5 +1,6 @@
 package com.madchen.tomatotime.model;
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -14,6 +15,7 @@ public class Tomato {
     private int[] times = new int[2];
     private int totalMinutes;
     private long startTimeL;
+//    private long surplusTimeL;
 
     public Tomato(int totalMinutes) {
         this(totalMinutes, 0);
@@ -89,5 +91,24 @@ public class Tomato {
 
     public void setStartTimeL(long startTimeL) {
         this.startTimeL = startTimeL;
+    }
+
+//    public long getSurplusTimeL() {
+//        return surplusTimeL;
+//    }
+//
+//    public void setSurplusTimeL(long surplusTimeL) {
+//        this.surplusTimeL = surplusTimeL;
+//    }
+
+    @Override
+    public String toString() {
+        return "Tomato{" +
+                "interrupt=" + interrupt +
+                ", totalTimeL=" + totalTimeL +
+                ", times=" + Arrays.toString(times) +
+                ", totalMinutes=" + totalMinutes +
+                ", startTimeL=" + startTimeL +
+                '}';
     }
 }

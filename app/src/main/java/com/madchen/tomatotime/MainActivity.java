@@ -3,7 +3,7 @@ package com.madchen.tomatotime;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.madchen.tomatotime.base.BaseActivity;
@@ -15,12 +15,13 @@ import com.madchen.tomatotime.model.Tomato;
 
 public class MainActivity extends BaseActivity implements CountDownView, View.OnClickListener, TomatoView.TomatoStatusListener {
 
-    private LinearLayout rootView;
+    private RelativeLayout rootView;
     private CountDownPresenter mPresenter;
     private TomatoView mTomatoView;
-    private TextView myDataText, settingText, musicText, totalMinutesText,
-            totalHoursText, helpText, startText, timeText;
+    private TextView myDataText, settingText, musicText, totalOverviewText,
+            todayOverviewText, helpText, startText, timeText;
     private Context mContext;
+    private RelativeLayout overViewLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,24 +33,26 @@ public class MainActivity extends BaseActivity implements CountDownView, View.On
     }
 
     private void initView() {
-        rootView = (LinearLayout) findViewById(R.id.root);
+        rootView = (RelativeLayout) findViewById(R.id.root);
         mTomatoView = (TomatoView) findViewById(R.id.tomato_view);
         myDataText = (TextView) findViewById(R.id.my_data_text);
         settingText = (TextView) findViewById(R.id.setting_text);
         musicText = (TextView) findViewById(R.id.music_text);
-        totalHoursText = (TextView) findViewById(R.id.my_total_hours);
-        totalMinutesText = (TextView) findViewById(R.id.my_total_minutes);
-        helpText = (TextView) findViewById(R.id.help_text);
+        todayOverviewText = (TextView) findViewById(R.id.text_today_overview_time);
+        totalOverviewText = (TextView) findViewById(R.id.text_total_overview_time);
+//        helpText = (TextView) findViewById(R.id.help_text);
         startText = (TextView) mTomatoView.findViewById(R.id.btn_start_count_down);
         timeText = (TextView) mTomatoView.findViewById(R.id.text_time);
+        overViewLayout = (RelativeLayout) findViewById(R.id.layout_overview);
         myDataText.setOnClickListener(this);
         settingText.setOnClickListener(this);
         musicText.setOnClickListener(this);
-        totalHoursText.setOnClickListener(this);
-        totalMinutesText.setOnClickListener(this);
-        helpText.setOnClickListener(this);
+        todayOverviewText.setOnClickListener(this);
+        totalOverviewText.setOnClickListener(this);
+//        helpText.setOnClickListener(this);
         startText.setOnClickListener(this);
         mTomatoView.setTomatoStatusListener(this);
+        overViewLayout.setOnClickListener(this);
     }
 
     @Override
@@ -81,13 +84,16 @@ public class MainActivity extends BaseActivity implements CountDownView, View.On
                     mPresenter.cancelTomato();
                 }
                 break;
-            case R.id.my_total_minutes:
+            case R.id.text_total_overview_time:
 
                 break;
-            case R.id.my_total_hours:
+            case R.id.text_today_overview_time:
 
                 break;
-            case R.id.help_text:
+//            case R.id.help_text:
+//
+//                break;
+            case R.id.layout_overview:
 
                 break;
         }

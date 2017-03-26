@@ -7,4 +7,6 @@ import com.madchen.tomatotime.base.BaseView;
  */
 
 public interface MyDataView extends BaseView {
+
+
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 
 import com.madchen.tomatotime.R;
 import com.madchen.tomatotime.model.Tomato;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by chenwei on 18/03/2017.
@@ -26,11 +29,15 @@ public class TomatoView extends LinearLayout {
     private TomatoStatusListener mTomatoStatusListener;
 
     public TomatoView(Context context) {
-        this(context, null);
+        super(context);
+        this.mContext = context;
+        initLayout();
     }
 
     public TomatoView(Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
+        this.mContext = context;
+        initLayout();
     }
 
     public TomatoView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -40,7 +47,7 @@ public class TomatoView extends LinearLayout {
     }
 
     private void initLayout() {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.countdown_layout, this);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.countdown_layout, null);
         addView(view);
         timeText = (TextView) view.findViewById(R.id.text_time);
         startTv = (TextView) view.findViewById(R.id.btn_start_count_down);
@@ -52,13 +59,15 @@ public class TomatoView extends LinearLayout {
 
     public void setTomato(Tomato tomato) {
         mTomato = tomato;
+        Log.d(TAG, "setTomato: "+tomato.toString());
     }
 
     public void startTomato() {
         isCountDowning = true;
-        mCountDownTimer = new CountDownTimer(System.currentTimeMillis()+mTomato.getTotalTimeL(), 1000) {
+        mCountDownTimer = new CountDownTimer(System.currentTimeMillis() + mTomato.getTotalTimeL(), 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
+                Log.d(TAG, "-----Count Down--- ");
                 mTomato.setSecond(mTomato.getSecond() - 1);
                 if (mTomato.getSecond() == -1) {
                     mTomato.setMinutes(mTomato.getMinutes() - 1);
@@ -72,7 +81,7 @@ public class TomatoView extends LinearLayout {
                     }
                 }
                 String time = (mTomato.getMinutes() >= 10 ? "" + mTomato.getMinutes() : "0" + mTomato.getMinutes())
-                        + " : " + (mTomato.getSecond() >= 10 ? mTomato.getMinutes() : "0" + mTomato.getSecond());
+                        + " : " + (mTomato.getSecond() >= 10 ? mTomato.getSecond() : "0" + mTomato.getSecond());
                 timeText.setText(time);
             }
 
@@ -82,6 +91,7 @@ public class TomatoView extends LinearLayout {
                 mTomatoStatusListener.finishTomato();
             }
         };
+        mCountDownTimer.start();
         startTv.setText(R.string.cancel_tomato_time);
     }
 
