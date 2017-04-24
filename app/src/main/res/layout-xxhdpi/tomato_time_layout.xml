@@ -7,7 +7,7 @@
               android:paddingRight="5dp"
               android:background="@color/myDataPageBackground"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="230dp">
 
     <TextView
             android:id="@+id/total_data_text"
@@ -21,5 +21,6 @@
     <com.github.mikephil.charting.charts.LineChart
             android:layout_width="match_parent"
             android:id="@+id/char_tomato"
+            android:layout_marginTop="10dp"
             android:layout_height="match_parent"/>
 </LinearLayout>

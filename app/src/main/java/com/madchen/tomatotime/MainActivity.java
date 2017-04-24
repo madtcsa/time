@@ -1,17 +1,20 @@
 package com.madchen.tomatotime;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.idescout.sql.SqlScoutServer;
 import com.madchen.tomatotime.base.BaseActivity;
 import com.madchen.tomatotime.countdown.CountDownPresenter;
 import com.madchen.tomatotime.countdown.CountDownPresenterImpl;
 import com.madchen.tomatotime.countdown.CountDownView;
 import com.madchen.tomatotime.customview.TomatoView;
 import com.madchen.tomatotime.model.Tomato;
+import com.madchen.tomatotime.mydata.MyDataActivity;
 
 public class MainActivity extends BaseActivity implements CountDownView, View.OnClickListener, TomatoView.TomatoStatusListener {
 
@@ -26,6 +29,7 @@ public class MainActivity extends BaseActivity implements CountDownView, View.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SqlScoutServer.create(this, getPackageName());
         setContentView(R.layout.activity_main);
         mContext = this;
         mPresenter = new CountDownPresenterImpl(this);
@@ -69,7 +73,8 @@ public class MainActivity extends BaseActivity implements CountDownView, View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.my_data_text:
-
+                Intent intent = new Intent(MainActivity.this, MyDataActivity.class);
+                startActivity(intent);
                 break;
             case R.id.music_text:
 

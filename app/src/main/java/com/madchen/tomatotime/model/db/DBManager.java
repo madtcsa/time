@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.madchen.tomatotime.model.Tomato;
 
+import java.util.List;
+
 /**
  * Created by chenwei on 17/03/2017.
  */
@@ -24,19 +26,16 @@ public class DBManager implements DBConstants {
         mSQLiteDatabase = mTomatoDBHelper.getWritableDatabase();
     }
 
-    public long saveTomato(Tomato tomato) {
-        long result = -1;
-        ContentValues cv = new ContentValues();
-        cv.put(TomatoTableField.minutes, tomato.getMinutes());
-        cv.put(TomatoTableField.interruptCount, tomato.getInterrupt());
-        cv.put(TomatoTableField.startTimeL, tomato.getStartTimeL());
-        result = mSQLiteDatabase.insert(DB_NAME, null, cv);
-        return result;
+    public long saveTomato(ContentValues contentValues) {
+        return mSQLiteDatabase.insert(TABLE_NAME, null, contentValues);
     }
 
     public Tomato getTomato() {
         Tomato tomato = new Tomato(0, 0);
-
         return tomato;
+    }
+
+    public SQLiteDatabase getSQLiteDatabase() {
+        return mSQLiteDatabase;
     }
 }

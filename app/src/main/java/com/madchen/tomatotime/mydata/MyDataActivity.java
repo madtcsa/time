@@ -29,8 +29,10 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.Utils;
 import com.madchen.tomatotime.R;
 import com.madchen.tomatotime.base.BaseActivity;
+import com.madchen.tomatotime.model.Tomato;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by chenwei on 2017/3/26.
@@ -45,13 +47,13 @@ public class MyDataActivity extends BaseActivity implements MyDataView, View.OnC
     private Context mContext;
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.mydata_layout);
         this.mContext = this;
         initView();
         myDataPresenterImpl = new MyDataPresenterImpl(this);
-
+        myDataPresenterImpl.getAllTomatoes();
 
     }
 
@@ -72,73 +74,86 @@ public class MyDataActivity extends BaseActivity implements MyDataView, View.OnC
         mLineChart.getDescription().setEnabled(false);
         mLineChart.setTouchEnabled(true);
         mLineChart.setDragEnabled(true);
-        mLineChart.setScaleEnabled(true);
+        mLineChart.setScaleEnabled(false);
         mLineChart.setPinchZoom(true);
-        // x-axis limit line
-        LimitLine llXAxis = new LimitLine(10f, "Index 10");
-        llXAxis.setLineWidth(4f);
-        llXAxis.enableDashedLine(10f, 10f, 0f);
-        llXAxis.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
-        llXAxis.setTextSize(10f);
 
         XAxis xAxis = mLineChart.getXAxis();
-        xAxis.enableGridDashedLine(10f, 10f, 0f);
-        //xAxis.setValueFormatter(new MyCustomXAxisValueFormatter());
-        //xAxis.addLimitLine(llXAxis); // add x-axis limit line
-
-
-        Typeface tf = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
-
-        LimitLine ll1 = new LimitLine(150f, "Upper Limit");
-        ll1.setLineWidth(4f);
-        ll1.enableDashedLine(10f, 10f, 0f);
-        ll1.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_TOP);
-        ll1.setTextSize(10f);
-        ll1.setTypeface(tf);
-
-        LimitLine ll2 = new LimitLine(-30f, "Lower Limit");
-        ll2.setLineWidth(4f);
-        ll2.enableDashedLine(10f, 10f, 0f);
-        ll2.setLabelPosition(LimitLine.LimitLabelPosition.RIGHT_BOTTOM);
-        ll2.setTextSize(10f);
-        ll2.setTypeface(tf);
+//        xAxis.enableGridDashedLine(10f, 10f, 0f);
+        xAxis.setDrawLabels(true);
+        xAxis.setDrawAxisLine(true);
+        xAxis.setDrawGridLines(false);
+        xAxis.setAxisMaximum(12f);
+        xAxis.setAxisMinimum(1f);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setTextColor(Color.WHITE);
 
         YAxis leftAxis = mLineChart.getAxisLeft();
         leftAxis.removeAllLimitLines(); // reset all limit lines to avoid overlapping lines
-        leftAxis.addLimitLine(ll1);
-        leftAxis.addLimitLine(ll2);
         leftAxis.setAxisMaximum(200f);
-        leftAxis.setAxisMinimum(-50f);
-        //leftAxis.setYOffset(20f);
-        leftAxis.enableGridDashedLine(10f, 10f, 0f);
+        leftAxis.setAxisMinimum(0f);
+        leftAxis.setTextColor(Color.WHITE);
+//        leftAxis.enableGridDashedLine(10f, 10f, 0f);
         leftAxis.setDrawZeroLine(false);
-
         // limit lines are drawn behind data (and not on top)
         leftAxis.setDrawLimitLinesBehindData(true);
-
         mLineChart.getAxisRight().setEnabled(false);
-
-        //mChart.getViewPortHandler().setMaximumScaleY(2f);
-        //mChart.getViewPortHandler().setMaximumScaleX(2f);
-
         // add data
-        setData(45, 100);
-
-//        mChart.setVisibleXRange(20);
-//        mChart.setVisibleYRange(20f, AxisDependency.LEFT);
-//        mChart.centerViewTo(20, 50, AxisDependency.LEFT);
-
+//        setData(12, 100);
         mLineChart.animateX(2500);
-        //mChart.invalidate();
-
         // get the legend (only possible after setting data)
         Legend l = mLineChart.getLegend();
-
         // modify the legend ...
         l.setForm(Legend.LegendForm.LINE);
-
         // // dont forget to refresh the drawing
         // mChart.invalidate();
+    }
+
+    public void showAllTomatoData(List<Tomato> tomatoList) {
+        List<Entry> values = new ArrayList<>();
+        LineDataSet lineDataSet;
+        for (int i = 0; i < tomatoList.size(); i++) {
+            values.add(new Entry(i, tomatoList.get(i).getMinutes(), getResources().getDrawable(R.drawable.star)));
+        }
+        if (mLineChart.getData() != null &&
+                mLineChart.getData().getDataSetCount() > 0) {
+            lineDataSet = (LineDataSet) mLineChart.getData().getDataSetByIndex(0);
+            lineDataSet.setValues(values);
+            mLineChart.getData().notifyDataChanged();
+            mLineChart.notifyDataSetChanged();
+        } else {
+            lineDataSet = new LineDataSet(values, "All Tomato");
+            lineDataSet.setDrawIcons(false);
+            lineDataSet.enableDashedLine(10f, 5f, 0f);
+            lineDataSet.enableDashedHighlightLine(10f, 5f, 0f);
+            lineDataSet.setColor(Color.WHITE);
+            lineDataSet.setCircleColor(Color.WHITE);
+            lineDataSet.setValueTextColor(Color.WHITE);
+            lineDataSet.setLineWidth(1f);
+            lineDataSet.setCircleRadius(1.5f);
+            lineDataSet.setDrawCircleHole(false);
+            lineDataSet.setValueTextSize(9f);
+            lineDataSet.setDrawFilled(true);
+            lineDataSet.setFormLineWidth(1f);
+            lineDataSet.setFormLineDashEffect(new DashPathEffect(new float[]{10f, 5f}, 0f));
+            lineDataSet.setFormSize(15.f);
+
+            if (Utils.getSDKInt() >= 18) {
+                // fill drawable only supported on api level 18 and above
+                Drawable drawable = ContextCompat.getDrawable(this, R.drawable.fade_red);
+                lineDataSet.setFillDrawable(drawable);
+            } else {
+                lineDataSet.setFillColor(Color.WHITE);
+            }
+
+            ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
+            dataSets.add(lineDataSet); // add the datasets
+
+            // create a data object with the datasets
+            LineData data = new LineData(dataSets);
+
+            // set data
+            mLineChart.setData(data);
+        }
     }
 
     private void setData(int count, float range) {
@@ -155,7 +170,7 @@ public class MyDataActivity extends BaseActivity implements MyDataView, View.OnC
 
         if (mLineChart.getData() != null &&
                 mLineChart.getData().getDataSetCount() > 0) {
-            set1 = (LineDataSet)mLineChart.getData().getDataSetByIndex(0);
+            set1 = (LineDataSet) mLineChart.getData().getDataSetByIndex(0);
             set1.setValues(values);
             mLineChart.getData().notifyDataChanged();
             mLineChart.notifyDataSetChanged();
@@ -168,10 +183,11 @@ public class MyDataActivity extends BaseActivity implements MyDataView, View.OnC
             // set the line to be drawn like this "- - - - - -"
             set1.enableDashedLine(10f, 5f, 0f);
             set1.enableDashedHighlightLine(10f, 5f, 0f);
-            set1.setColor(Color.BLACK);
-            set1.setCircleColor(Color.BLACK);
+            set1.setColor(Color.WHITE);
+            set1.setCircleColor(Color.WHITE);
+            set1.setValueTextColor(Color.WHITE);
             set1.setLineWidth(1f);
-            set1.setCircleRadius(3f);
+            set1.setCircleRadius(1.5f);
             set1.setDrawCircleHole(false);
             set1.setValueTextSize(9f);
             set1.setDrawFilled(true);
@@ -183,9 +199,8 @@ public class MyDataActivity extends BaseActivity implements MyDataView, View.OnC
                 // fill drawable only supported on api level 18 and above
                 Drawable drawable = ContextCompat.getDrawable(this, R.drawable.fade_red);
                 set1.setFillDrawable(drawable);
-            }
-            else {
-                set1.setFillColor(Color.BLACK);
+            } else {
+                set1.setFillColor(Color.WHITE);
             }
 
             ArrayList<ILineDataSet> dataSets = new ArrayList<ILineDataSet>();
@@ -202,7 +217,7 @@ public class MyDataActivity extends BaseActivity implements MyDataView, View.OnC
 
     @Override
     public Context getContext() {
-        return null;
+        return this.mContext;
     }
 
     @Override

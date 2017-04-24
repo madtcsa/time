@@ -10,10 +10,11 @@ public interface DBConstants {
     String TABLE_NAME = "table_tomato";
     int DB_VERSION = 1;
 
-    String CREATE_TOMATO_TABLE = "CREATE TABLE " + TABLE_NAME + " ( " + TomatoTableField._id + " INTEGER AUTO_INCREMENT, " +
-            TomatoTableField.minutes + " LONG NOT NULL, " + TomatoTableField.startTimeL + " LONG NOT NULL, " +
-            " LONG NOT NULL, " + TomatoTableField.interruptCount + " INTEGER NOT NULL, "
-            + "PRIMARY KEY (" + TomatoTableField._id + "));";
+    String CREATE_TOMATO_TABLE = "CREATE TABLE " + TABLE_NAME + " ( " + TomatoTableField._id + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            TomatoTableField.minutes + " LONG NOT NULL, " + TomatoTableField.startTimeL + " LONG NOT NULL, "
+            + TomatoTableField.interruptCount + " INTEGER NOT NULL)";
+
+    String QUERY_ALL_TOMATOES = "SELECT * FROM " + TABLE_NAME;
 
     interface TomatoTableField {
 

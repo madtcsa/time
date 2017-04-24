@@ -19,7 +19,6 @@ public class MyDataPresenterImpl implements MyDataPresenter, TomatoDataSource.Lo
     public MyDataPresenterImpl(MyDataView myDataView) {
         mMyDataView = myDataView;
         mTomatoDataSourceImpl = new TomatoDataSourceImpl(mMyDataView.getContext());
-
     }
 
     @Override
@@ -39,8 +38,8 @@ public class MyDataPresenterImpl implements MyDataPresenter, TomatoDataSource.Lo
 
 
     @Override
-    public void onAllTomatoLoaded(Tomato tomato) {
-
+    public void onAllTomatoLoaded(List<Tomato> tomatoList) {
+        mMyDataView.showAllTomatoData(tomatoList);
     }
 
     @Override

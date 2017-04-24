@@ -1,5 +1,7 @@
 package com.madchen.tomatotime.model;
 
+import android.view.LayoutInflater;
+
 import java.util.List;
 
 /**
@@ -8,7 +10,7 @@ import java.util.List;
 
 public interface TomatoDataSource {
 
-    void saveTomato(Tomato tomato);
+    void saveTomato(Tomato tomato,SaveTomatoCallBack saveTomatoCallBack);
 
     void loadAllTomato(LoadAllTomatoCallBack loadAllTomatoCallBack);
 
@@ -18,7 +20,7 @@ public interface TomatoDataSource {
 
     interface LoadAllTomatoCallBack {
 
-        void onAllTomatoLoaded(Tomato tomato);
+        void onAllTomatoLoaded(List<Tomato> tomatoList);
 
         void onAllDataNotAvailable();
     }
@@ -35,5 +37,11 @@ public interface TomatoDataSource {
         void onDayTomatoesLoaded(List<Tomato> tomatoList);
 
         void onDayDataNovAvailable();
+    }
+
+    interface SaveTomatoCallBack {
+        void saveTomatoSuccess();
+
+        void saveTomatoFailed();
     }
 }

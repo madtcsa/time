@@ -16,12 +16,13 @@ import java.util.Date;
  * Created by chenwei on 16/03/2017.
  */
 
-public class CountDownPresenterImpl implements CountDownPresenter {
+public class CountDownPresenterImpl implements CountDownPresenter,TomatoDataSource.SaveTomatoCallBack {
 
     private CountDownView mCountDownView;
     private TomatoDataSource mTomatoDataSourceImpl;
     private Tomato mTomato;
     private PhoneStatus mPhoneStatus;
+    private TomatoDataSource.SaveTomatoCallBack mSaveTomatoCallBack;
 
     public CountDownPresenterImpl(CountDownView countDownView) {
         mCountDownView = countDownView;
@@ -30,7 +31,7 @@ public class CountDownPresenterImpl implements CountDownPresenter {
 
     @Override
     public void createNewTomato() {
-        mTomato = new Tomato(25,0);
+        mTomato = new Tomato(1,0);
         mCountDownView.startCountDownTime(mTomato);
         initReceiver();
     }
@@ -51,7 +52,17 @@ public class CountDownPresenterImpl implements CountDownPresenter {
     public void overTomato() {
         mCountDownView.overTomato();
         cancelReceiver();
-        mTomatoDataSourceImpl.saveTomato(mTomato);
+        mTomatoDataSourceImpl.saveTomato(mTomato,this);
+    }
+
+    @Override
+    public void saveTomatoSuccess() {
+
+    }
+
+    @Override
+    public void saveTomatoFailed() {
+
     }
 
     private void initReceiver() {
